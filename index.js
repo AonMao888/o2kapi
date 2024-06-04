@@ -3,8 +3,12 @@ const app = express();
 const {createClient} = require('@supabase/supabase-js')
 const url = 'https://oxovhbhwuxpyiqkxizbe.supabase.co';
 const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94b3ZoYmh3dXhweWlxa3hpemJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA4Njg2MzAsImV4cCI6MjAwNjQ0NDYzMH0.YdbrQlYhlfQrJhC2_99ZGFaL0hrg26sMRbVGXAUejX4';
+const cors = require('cors');
 
 const supabase = createClient(url,key);
+app.use(cors({
+    origin:'*'
+}))
 
 app.get('/',(req,res)=>{
     res.send('home')
