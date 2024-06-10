@@ -9,6 +9,7 @@ const supabase = createClient(url,key);
 app.use(cors({
     origin:'*'
 }))
+app.use(express.urlencoded({extended:true}));
 
 app.get('/',(req,res)=>{
     res.send('home')
@@ -32,6 +33,25 @@ app.get('/student/id/:id',async(req,res)=>{
     const id = req.params.id;
     const {data,error} = await supabase.from('students').select().eq('sid',id);
     res.json(data);
+})
+
+//add student to database
+app.post('/add/student',async(req,res)=>{
+    let back = req.query.back;
+    const all = req.body;
+    const {data,error} = await supabase.from('students').insert([{
+        name:all.name,
+        nickname:all.nickname,
+        address:all.addr,
+        contact:all.contact,
+        sid:all.sid,
+        year:all.year,
+        class:all.class,
+        marks:all.mark
+    }]).select();
+    if(!error){
+        res.redirect(back);
+    }
 })
 
 app.listen(80,()=>{
