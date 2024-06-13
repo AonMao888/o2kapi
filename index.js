@@ -54,6 +54,16 @@ app.post('/add/student',async(req,res)=>{
     }
 })
 
+//get tools list data
+app.get('/tools',async(req,res)=>{
+    const {data,error} = await supabase.from('tools').select('*');
+    if(data){
+        res.json(data)
+    }else{
+        res.sendStatus(404).end('Error')
+    }
+})
+
 app.listen(80,()=>{
     console.log('Server started with port 80');
 })
