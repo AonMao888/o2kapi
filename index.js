@@ -9,6 +9,7 @@ const supabase = createClient(url,key);
 app.use(cors({
     origin:'*'
 }))
+
 app.use(express.urlencoded({extended:true}));
 
 app.get('/',(req,res)=>{
@@ -57,6 +58,17 @@ app.post('/add/student',async(req,res)=>{
 //get tools list data
 app.get('/tools',async(req,res)=>{
     const {data,error} = await supabase.from('tools').select('*');
+    if(data){
+        res.json(data)
+    }else{
+        res.sendStatus(404).end('Error')
+    }
+})
+
+//get tools list data by categories
+app.get('/tools/:cate',async(req,res)=>{
+    const cate = req.params.cate;
+    const {data,error} = await supabase.from('tools').select().eq('type',cate);
     if(data){
         res.json(data)
     }else{
