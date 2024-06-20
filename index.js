@@ -76,6 +76,18 @@ app.get('/tools/:cate',async(req,res)=>{
     }
 })
 
+//update student mark
+app.get('/update/student/:id',async(req,res)=>{
+    const id = req.params.id;
+    const to = req.query.to;
+    const {data,error} = await supabase.from('students').update({marks:to}).eq('sid',id).select();
+    if (data) {
+        res.json({
+            "status":"success"
+        })
+    }
+})
+
 app.listen(80,()=>{
     console.log('Server started with port 80');
 })
